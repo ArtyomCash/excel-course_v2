@@ -1,0 +1,16 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    // тут прописываются правила для Eslint
+    // например
+    // "semi": "off" - убрать точки с запятыми
+    // "arrow-parens": "off" - убрать круглые сскобки со стрелочной функции
+    "require-jsdoc": "off" // не писать доки => async function start()
+  },
+  "extends": ["eslint:recommended", "google"]
+}
