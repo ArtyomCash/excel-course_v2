@@ -10,7 +10,9 @@
     // например
     // "semi": "off" - убрать точки с запятыми
     // "arrow-parens": "off" - убрать круглые сскобки со стрелочной функции
-    "require-jsdoc": "off" // не писать доки => async function start()
+    "require-jsdoc": "off", // не писать доки => async function start()
+    "object-curly-spacing": "off",
+    "linebreak-style": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }
