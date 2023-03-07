@@ -1,15 +1,22 @@
+import {$} from '@core/dom';
+
 export class Excel {
   constructor(selector, options) {
     this.$el = document.querySelector('#app');
     this.components = options.components || [];
   }
   getRoot() {
-    const $root = document.createElement('div');
+    const $root = $.create('div', 'excel');
     // console.log(this.components);
 
     this.components.forEach((Component) => {
-      const component = new Component();
-      $root.insertAdjacentHTML('beforeend', component.toHTML());
+      // const $el = document.createElement('div');
+      // $el.classList.add(Component.className);
+      const $el = $.create('div', Component.className);
+      const component = new Component($el);
+      $el.innerHTML = component.toHTML();
+      $root.append($el);
+      // $root.insertAdjacentHTML('beforeend', component.toHTML());
     });
     // $root.textContent = 'test';
     // $root.style.fontSize = '5rem';

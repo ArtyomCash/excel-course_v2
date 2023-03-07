@@ -12,7 +12,9 @@
     // "arrow-parens": "off" - убрать круглые сскобки со стрелочной функции
     "require-jsdoc": "off", // не писать доки => async function start()
     "object-curly-spacing": "off",
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+   //"max-len": "warn",
+    "max-len": ["error", { "code": 120 }]
   },
   "extends": ["eslint:recommended", "google"]
 }
