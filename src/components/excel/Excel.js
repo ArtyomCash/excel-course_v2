@@ -2,7 +2,8 @@ import {$} from '@core/dom';
 
 export class Excel {
   constructor(selector, options) {
-    this.$el = document.querySelector('#app');
+    // this.$el = document.querySelector('#app');
+    this.$el = $(selector);
     this.components = options.components || [];
   }
   getRoot() {
@@ -14,7 +15,9 @@ export class Excel {
       // $el.classList.add(Component.className);
       const $el = $.create('div', Component.className);
       const component = new Component($el);
-      $el.innerHTML = component.toHTML();
+      // console.log('$el>>>', $el);
+      // $el.innerHTML = component.toHTML();
+      $el.html(component.toHTML());
       $root.append($el);
       // $root.insertAdjacentHTML('beforeend', component.toHTML());
     });
@@ -30,6 +33,7 @@ export class Excel {
     // this.$el.append(document.createElement('h1'));
     // const node = document.createElement('h1');
     // node.textContent = 'TEST';
+    // this.$el.append(this.getRoot().$el);
     this.$el.append(this.getRoot());
   }
 }
