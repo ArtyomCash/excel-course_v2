@@ -14,7 +14,8 @@
     "object-curly-spacing": "off",
     "linebreak-style": "off",
    //"max-len": "warn",
-    "max-len": ["error", { "code": 120 }]
+    "max-len": ["error", { "code": 120 }],
+//    "spaced-comment": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

@@ -1,4 +1,4 @@
-import {$} from '@core/dom';
+import { $ } from '@core/dom';
 
 export class Excel {
   constructor(selector, options) {
@@ -10,7 +10,7 @@ export class Excel {
     const $root = $.create('div', 'excel');
     // console.log(this.components);
 
-    this.components.forEach((Component) => {
+    this.components = this.components.map((Component) => {
       // const $el = document.createElement('div');
       // $el.classList.add(Component.className);
       const $el = $.create('div', Component.className);
@@ -19,6 +19,7 @@ export class Excel {
       // $el.innerHTML = component.toHTML();
       $el.html(component.toHTML());
       $root.append($el);
+      return component;
       // $root.insertAdjacentHTML('beforeend', component.toHTML());
     });
     // $root.textContent = 'test';
@@ -35,5 +36,6 @@ export class Excel {
     // node.textContent = 'TEST';
     // this.$el.append(this.getRoot().$el);
     this.$el.append(this.getRoot());
+    this.components.forEach((component) => component.init());
   }
 }
