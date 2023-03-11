@@ -1,3 +1,5 @@
+import { capitalize } from '@core/utils';
+
 export class DomListener {
   // добавляем изолированные события которые будут наследоваться от этого класса
   // $root - корневой элемент на который мы будем вешать слушателей
@@ -9,8 +11,24 @@ export class DomListener {
     this.listeners = listeners;
   }
   initDOMListeners() {
-    console.log(this.listeners);
+    // console.log(this.listeners, this.$root);
+    this.listeners.forEach((listener) => {
+      const method = getMethodName(listener);
+      if (!this[method]) {
+        throw new Error(`Method ${method} is not implemented in ${this.name || ''} Component`);
+      }
+      console.log('method', this);
+      // тоже самое что и addEventListener
+      this.$root.on(listener, this[method].bind(this));
+    });
   }
 
-  removeDOMListeners() {}
+  removeDOMListeners() {
+    // realize!
+  }
+}
+
+// input => onInput
+function getMethodName(eventName) {
+  return 'on' + capitalize(eventName);
 }
