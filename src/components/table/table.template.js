@@ -9,9 +9,12 @@ function toCell() {
   `;
 }
 
+// data-  => это data атрибуты к которым можно обращаться !!!!!!!!!
+// обращение к атрибуту происходит через [], пример => const $perent = $resizer.$el.closest('[data-type="resizable"]');
+
 function toColumn(col) {
   return `
-    <div class="column">
+    <div class="column" data-type="resizable">
       ${col}
       <div class="col-resize" data-resize="col"></div>
     </div>
@@ -39,7 +42,7 @@ export function createTable(rowCount = 15) {
 
   const cols = new Array(colsCount).fill('').map(toChar).map(toColumn).join('');
 
-  console.log('cols', cols);
+  // console.log('cols', cols);
   rows.push(createRow(null, cols));
 
   for (let i = 0; i < rowCount; i++) {

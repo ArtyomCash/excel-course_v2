@@ -41,6 +41,16 @@ class Dom {
     return this;
     // this.$el.append(node.$el);
   }
+
+  // closest => возращает HTMLlement - нативный элемент, а нам нужно работать с инстансом класса дом
+  // поэтому нужно обернуть в конструктор $(value....)
+  closest(selector) {
+    return $(this.$el.closest(selector));
+  }
+  // getBoundingClientRect => позволяет получить набор координат
+  getCoords() {
+    return this.$el.getBoundingClientRect();
+  }
 }
 
 // $('div').html('<h1>Test</h1>>').clear();
