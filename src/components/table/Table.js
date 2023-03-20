@@ -35,6 +35,8 @@ export class Table extends ExcelComponent {
         const delta = e.pageX - coords.right;
         const value = coords.width + delta;
         $perent.$el.style.width = value + 'px';
+        document.querySelectorAll(`[data-col="${$perent.data.col}"]`)
+            .forEach((el) => el.style.width = value + 'px');
         // console.log('delta', delta);
       };
       // удаляю событие на мышки когда отпускаю кнопку мышки

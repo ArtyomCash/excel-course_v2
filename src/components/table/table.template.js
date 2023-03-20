@@ -3,18 +3,18 @@ const CODES = {
   Z: 90,
 };
 
-function toCell() {
+function toCell(_, col) {
   return `
-    <div class="sell" contenteditable></div>
+    <div class="sell" contenteditable data-col="${col}"></div>
   `;
 }
 
 // data-  => это data атрибуты к которым можно обращаться !!!!!!!!!
 // обращение к атрибуту происходит через [], пример => const $perent = $resizer.$el.closest('[data-type="resizable"]');
 
-function toColumn(col) {
+function toColumn(col, index) {
   return `
-    <div class="column" data-type="resizable">
+    <div class="column" data-type="resizable" data-col="${index}">
       ${col}
       <div class="col-resize" data-resize="col"></div>
     </div>

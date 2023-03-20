@@ -42,6 +42,9 @@ class Dom {
     // this.$el.append(node.$el);
   }
 
+  get data() {
+    return this.$el.dataset;
+  }
   // closest => возращает HTMLlement - нативный элемент, а нам нужно работать с инстансом класса дом
   // поэтому нужно обернуть в конструктор $(value....)
   closest(selector) {
