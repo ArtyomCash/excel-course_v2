@@ -26,6 +26,10 @@ class Dom {
     this.$el.removeEventListener(eventType, callback);
   }
 
+  find(selector) {
+    return $(this.$el.querySelector(selector));
+  }
+
   append(node) {
     // console.log('node>>>', node);
     if (node instanceof Dom) {
@@ -62,6 +66,14 @@ class Dom {
     Object.keys(styles).forEach((key) => {
       this.$el.style[key] = styles[key];
     });
+  }
+
+  addClass(className) {
+    this.$el.classList.add(className);
+  }
+
+  remove(className) {
+    this.$el.classList.remove(className);
   }
 }
 
