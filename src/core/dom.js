@@ -72,7 +72,7 @@ class Dom {
     this.$el.classList.add(className);
   }
 
-  remove(className) {
+  removeClass(className) {
     this.$el.classList.remove(className);
   }
 }

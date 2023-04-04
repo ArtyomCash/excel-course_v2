@@ -1,7 +1,8 @@
 import { ExcelComponent } from '@core/ExcelComponent';
+import { $ } from '@core/dom';
 import { createTable } from '@/components/table/table.template';
 import { resizeHandler } from '@/components/table/table.resize';
-import { shouldResize } from '@/components/table/table.functions';
+import {isCell, shouldResize} from '@/components/table/table.functions';
 import { TableSelection } from '@/components/table/TableSelection';
 
 export class Table extends ExcelComponent {
@@ -35,6 +36,9 @@ export class Table extends ExcelComponent {
     if (shouldResize(event)) {
       // console.log('Start resizing', event.target.dataset.resize);
       resizeHandler(this.$root, event);
+    } else if (isCell(event)) {
+      const $target = $(event.target);
+      this.selection.select($target);
     }
   }
 
