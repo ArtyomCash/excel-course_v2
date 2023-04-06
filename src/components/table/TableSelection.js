@@ -9,7 +9,8 @@ export class TableSelection {
   // $el instance DOM === tre
   select($el) {
     this.clear();
-    $el.addClass(TableSelection.className);
+    // добавил focus - что бы курсор передвигался вместе с синей рамочкой
+    $el.focus().addClass(TableSelection.className);
     this.group.push($el);
     this.current = $el;
   }
