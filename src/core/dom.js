@@ -13,6 +13,10 @@ class Dom {
     // trim() - удаляет лишни проделы в начале и в конце
     return this.$el.outerHTML.trim();
   }
+
+  text(text) {
+    this.$el.textContent = text;
+  }
   clear() {
     this.html('');
     return this;
