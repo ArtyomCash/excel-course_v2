@@ -40,11 +40,16 @@ export class Table extends ExcelComponent {
       this.selection.current.focus();
     });
     // this.unsubs.push(unsub);
+
+    this.$subscribe((state) => {
+      console.log('TableState', state);
+    });
   }
 
   selectCell($cell) {
     this.selection.select($cell);
     this.$emit('table:select', $cell);
+    // this.$dispatch({ type: 'TEST' });
   }
 
   onMousedown(event) {
@@ -59,7 +64,7 @@ export class Table extends ExcelComponent {
         const $cells = matrix($target, this.selection.current).map((id) => this.$root.find(`[data-id="${id}"]`));
         this.selection.selectGroup($cells);
       } else {
-        this.selection.select($target);
+        this.selectCell($target);
       }
     }
   }
