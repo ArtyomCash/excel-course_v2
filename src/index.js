@@ -8,7 +8,8 @@ import { createStore } from '@/core/createStore';
 import { rootReducer } from '@/redux/rootReduser';
 
 const store = createStore(rootReducer, {
-  tableTitle: 'My Table excel',
+  // tableTitle: 'My Table excel',
+  colState: {},
 });
 
 const excel = new Excel('#app', {
