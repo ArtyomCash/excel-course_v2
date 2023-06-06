@@ -6,6 +6,8 @@
     "node": true
   },
   "rules": {
+//    "indent": ["error", 2],
+//    "indent": "off",
     // тут прописываются правила для Eslint
     // например
     // "semi": "off" - убрать точки с запятыми
@@ -13,8 +15,9 @@
     "require-jsdoc": "off", // не писать доки => async function start()
     "object-curly-spacing": "off",
     "linebreak-style": "off",
+//    "space-before-function-paren": "off",
    //"max-len": "warn",
-    "max-len": ["error", { "code": 120 }],
+    "max-len": ["error", { "code": 120 }]
 //    "indent": ["error", "tab"]
 //    "spaced-comment": "off"
   },
