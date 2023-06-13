@@ -17,9 +17,10 @@
     "linebreak-style": "off",
 //    "space-before-function-paren": "off",
    //"max-len": "warn",
-    "max-len": ["error", { "code": 120 }]
+    "max-len": ["error", { "code": 120 }],
 //    "indent": ["error", "tab"]
 //    "spaced-comment": "off"
+//    "no-debugger": "off"
   },
   "extends": ["eslint:recommended", "google"]
 }

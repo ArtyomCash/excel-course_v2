@@ -54,11 +54,13 @@ export function resizeHandler($root, event) {
       } else {
         $perent.css({ height: value + 'px' });
       }
-
+      // debugger;
       // нахожу id столбца который нужно сохранить вместе со значением
       resolve({
         value,
-        id: type === 'col' ? $perent.data.col : null,
+        type,
+        // id: type === 'col' ? $perent.data.col : $perent.data.row,
+        id: $perent.data[type],
       });
 
       $resizer.css({
