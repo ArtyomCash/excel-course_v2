@@ -33,7 +33,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', (text) => {
       this.selection.current.text(text);
-      console.log('Table from Formula', text);
+      this.updateTextInStore(text);
     });
 
     // добавляю прослушку события
@@ -98,7 +98,27 @@ export class Table extends ExcelComponent {
     super.destroy();
     this.unsubs.forEach((unsub) => unsub());
   }*/
+
+  updateTextInStore(value) {
+    this.$dispatch(
+        actions.changeText({
+          id: this.selection.current.id(),
+          value,
+        })
+    );
+  }
+
+  /* onInput(event) {
+    // this.$emit('table:input', $(event.target));
+    // в changeText передаём объект в который передаём id и текст
+    this.$dispatch(
+        actions.changeText({
+          id: this.selection.current.id(),
+          value: $(event.target).text(),
+        })
+    );
+  }*/
   onInput(event) {
-    this.$emit('table:input', $(event.target));
+    this.updateTextInStore($(event.target).text());
   }
 }

@@ -23,38 +23,32 @@ export class Formula extends ExcelComponent {
 
   init() {
     super.init();
+
     this.$formula = this.$root.find('#formula');
-    // $sell - значение текста ячейки вставляю в input
+
     this.$on('table:select', ($cell) => {
       this.$formula.text($cell.text());
     });
 
-    this.$on('table:input', ($cell) => {
-      this.$formula.text($cell.text());
-    });
+    // this.$on('table:input', $cell => {
+    //   this.$formula.text($cell.text())
+    // })
 
-    /* this.$subscribe((state) => {
-      console.log('FormulaState', state);
-    });*/
+    this.$subscribe((state) => {
+      console.log('Formula update', state.currentText);
+      this.$formula.text(state.currentText);
+    });
   }
 
   onInput(event) {
-    // this.emitter.emit('it is working', text);  обращаюсь сразу к emit
     this.$emit('formula:input', $(event.target).text());
-    // console.log(this.$root);
-    /* console.log('Formula: onInput', event.target.textContent.trim());*/
   }
 
   onKeydown(event) {
     const keys = ['Enter', 'Tab'];
     if (keys.includes(event.key)) {
       event.preventDefault();
-      // делаю фокус на таблицу
       this.$emit('formula:done');
     }
   }
-
-  /* onClick() {
-    console.log('mk');
-  }*/
 }
