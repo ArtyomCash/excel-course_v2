@@ -1,10 +1,23 @@
-import { storage } from '@core/utils';
+import { defaultStyles, defaultTitle } from '@/constants';
+import { clone } from '@core/utils';
 
 const defaultState = {
+  title: defaultTitle,
   rowState: {},
   colState: {},
-  dataState: {}, // сохраняет значение текущих ячеек {'0:1' : 'Запись в ячейке'}
-  currentText: '', // поле отвечающее за текс который введён
+  dataState: {},
+  stylesState: {},
+  currentText: '',
+  currentStyles: defaultStyles,
+  openedDate: new Date().toJSON(),
 };
 
-export const initialState = storage('excel-state') ? storage('excel-state') : defaultState;
+const normalize = (state) => ({
+  ...state,
+  currentStyles: defaultStyles,
+  currentText: '',
+});
+
+export function normalizeInitialState(state) {
+  return state ? normalize(state) : clone(defaultState);
+}

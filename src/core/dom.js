@@ -1,22 +1,23 @@
-// файл  dom.js => для простоты общения с дом деревом (типа jQuery)
-// создаю автоматизированное появление элемента
 class Dom {
   constructor(selector) {
-    // #app
     this.$el = typeof selector === 'string' ? document.querySelector(selector) : selector;
   }
-  // html(html) - базовый гетер
-  // нужно сделать что бы метод был и геттером и сеттером
+
   html(html) {
     if (typeof html === 'string') {
       this.$el.innerHTML = html;
+      return this;
     }
-    // trim() - удаляет лишни пробелы в начале и в конце
     return this.$el.outerHTML.trim();
   }
 
+  clear() {
+    this.html('');
+    return this;
+  }
+
   text(text) {
-    if (typeof text === 'string') {
+    if (typeof text !== 'undefined') {
       this.$el.textContent = text;
       return this;
     }
@@ -24,10 +25,6 @@ class Dom {
       return this.$el.value.trim();
     }
     return this.$el.textContent.trim();
-  }
-  clear() {
-    this.html('');
-    return this;
   }
 
   on(eventType, callback) {
@@ -43,11 +40,10 @@ class Dom {
   }
 
   append(node) {
-    // console.log('node>>>', node);
     if (node instanceof Dom) {
       node = node.$el;
     }
-    // полифил
+
     if (Element.prototype.append) {
       this.$el.append(node);
     } else {
@@ -55,21 +51,20 @@ class Dom {
     }
 
     return this;
-    // this.$el.append(node.$el);
   }
 
   get data() {
     return this.$el.dataset;
   }
-  // closest => возращает HTMLlement - нативный элемент, а нам нужно работать с инстансом класса дом
-  // поэтому нужно обернуть в конструктор $(value....)
+
   closest(selector) {
     return $(this.$el.closest(selector));
   }
-  // getBoundingClientRect => позволяет получить набор координат
+
   getCoords() {
     return this.$el.getBoundingClientRect();
   }
+
   findAll(selector) {
     return this.$el.querySelectorAll(selector);
   }
@@ -78,6 +73,13 @@ class Dom {
     Object.keys(styles).forEach((key) => {
       this.$el.style[key] = styles[key];
     });
+  }
+
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s];
+      return res;
+    }, {});
   }
 
   id(parse) {
@@ -96,6 +98,14 @@ class Dom {
     return this;
   }
 
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value);
+      return this;
+    }
+    return this.$el.getAttribute(name);
+  }
+
   addClass(className) {
     this.$el.classList.add(className);
     return this;
@@ -107,13 +117,10 @@ class Dom {
   }
 }
 
-// $('div').html('<h1>Test</h1>>').clear();
-// event.target
 export function $(selector) {
   return new Dom(selector);
 }
 
-// создаю статический метод
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName);
   if (classes) {

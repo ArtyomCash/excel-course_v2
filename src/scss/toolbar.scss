@@ -7,10 +7,11 @@
   right: 0;
   top: $header-height;
   height: $toolbar-height;
-  border-top:  1px solid $border-color;
+  border-top: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
   padding: 7px 10px;
   display: flex;
+
   .button {
     @include button(green);
   }

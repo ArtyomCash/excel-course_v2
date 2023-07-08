@@ -1,17 +1,14 @@
 // создаю состояние хранения даннных на базе Redax
 // rootReducer - функция которая возращает первый store
-
-export function createStore(rootReducer, initialState) {
-  // state - буду с ним взаимодействовать.
+export function createStore(rootReducer, initialState = {}) {
   let state = rootReducer({ ...initialState }, { type: '__INIT__' });
-  // listeners - будет содержать слушателей для Store
   let listeners = [];
 
   return {
     subscribe(fn) {
       listeners.push(fn);
       return {
-        unSubscribe() {
+        unsubscribe() {
           listeners = listeners.filter((l) => l !== fn);
         },
       };
@@ -21,7 +18,9 @@ export function createStore(rootReducer, initialState) {
       listeners.forEach((listener) => listener(state));
     },
     getState() {
-      return state;
+      return JSON.parse(JSON.stringify(state));
     },
   };
 }
+
+// Extra Task - Переписать на класс

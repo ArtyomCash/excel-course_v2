@@ -1,3 +1,7 @@
+import { toInlineStyles } from '@core/utils';
+import { defaultStyles } from '@/constants';
+import { parse } from '@core/parse';
+
 const CODES = {
   A: 65,
   Z: 90,
@@ -19,52 +23,62 @@ function toCell(state, row) {
     const id = `${row}:${col}`;
     const width = getWidth(state.colState, col);
     const data = state.dataState[id];
+    const styles = toInlineStyles({
+      ...defaultStyles,
+      ...state.stylesState[id],
+    });
     return `
       <div 
-        class="sell" 
+        class="cell" 
         contenteditable 
         data-col="${col}"
         data-type="cell"
-        data-id="${row}:${col}"
-        style="width: ${width}"
-      >${data || ''}</div>
-  `;
+        data-id="${id}"
+        data-value="${data || ''}"
+        style="${styles}; width: ${width}"
+      >${parse(data) || ''}</div>
+    `;
   };
 }
 
-// data-  => это data атрибуты к которым можно обращаться !!!!!!!!!
-// обращение к атрибуту происходит через [], пример => const $perent = $resizer.$el.closest('[data-type="resizable"]');
-
-function toColumn({col, index, width}) {
+function toColumn({ col, index, width }) {
   return `
-    <div class="column" data-type="resizable" data-col="${index}" style="width: ${width}">
+    <div 
+      class="column" 
+      data-type="resizable" 
+      data-col="${index}" 
+      style="width: ${width}"
+    >
       ${col}
       <div class="col-resize" data-resize="col"></div>
     </div>
-    `;
+  `;
 }
 
-function createRow(index, content, state) {
+function createRow(index, content, state = {}) {
   const resize = index ? '<div class="row-resize" data-resize="row"></div>' : '';
   const height = getHeight(state, index);
   return `
-    <div class="row" 
-         data-type="resizable" 
-         data-row="${index}"
-         style="height: ${height}"
+    <div 
+      class="row" 
+      data-type="resizable" 
+      data-row="${index}"
+      style="height: ${height}"
     >
-      <div class="row-info">${index ? index : ''} ${resize}</div>
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resize}
+      </div>
       <div class="row-data">${content}</div>
     </div>
   `;
 }
-// если элемент не используется (входящий параметр) то его можно заменить плейсхолдером "_"
 
 function toChar(_, index) {
   return String.fromCharCode(CODES.A + index);
 }
 
-function widthWidthFrom(state) {
+function withWidthFrom(state) {
   return function(col, index) {
     return {
       col,
@@ -74,30 +88,17 @@ function widthWidthFrom(state) {
   };
 }
 
-export function createTable(rowCount = 15, state = {}) {
-  const colsCount = CODES.Z - CODES.A + 1;
+export function createTable(rowsCount = 15, state = {}) {
+  const colsCount = CODES.Z - CODES.A + 1; // Compute cols count
   const rows = [];
 
-  const cols = new Array(colsCount)
-      .fill('')
-      .map(toChar)
-      .map(widthWidthFrom(state))
-      .map(toColumn)
-      /* .map((col, index) => {
-        const width = getWidth(state.colState, index);
-        return toColumn(col, index, width);
-      })*/
-      .join('');
+  const cols = new Array(colsCount).fill('').map(toChar).map(withWidthFrom(state)).map(toColumn).join('');
 
-  // console.log('cols', cols);
-  rows.push(createRow(null, cols, {}));
+  rows.push(createRow(null, cols));
 
-  for (let row = 0; row < rowCount; row++) {
-    const cells = new Array(colsCount)
-        .fill('')
-        // .map((_, col) => toCell(row, col))
-        .map(toCell(state, row))
-        .join('');
+  for (let row = 0; row < rowsCount; row++) {
+    const cells = new Array(colsCount).fill('').map(toCell(state, row)).join('');
+
     rows.push(createRow(row + 1, cells, state.rowState));
   }
 

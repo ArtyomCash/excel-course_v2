@@ -19,8 +19,8 @@ export function matrix($target, $current) {
     return acc;
   }, []);
 }
-// перемещение курсора
-export function nextSelector(key, {col, row}) {
+
+export function nextSelector(key, { col, row }) {
   const MIN_VALUE = 0;
   switch (key) {
     case 'Enter':
@@ -35,9 +35,9 @@ export function nextSelector(key, {col, row}) {
       col = col - 1 < MIN_VALUE ? MIN_VALUE : col - 1;
       break;
     case 'ArrowUp':
-      // что бы курсов не выходил за педелы экрана
       row = row - 1 < MIN_VALUE ? MIN_VALUE : row - 1;
       break;
   }
+
   return `[data-id="${row}:${col}"]`;
 }
